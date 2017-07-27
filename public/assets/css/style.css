@@ -1,0 +1,18 @@
+body {
+    background: url(../images/hip-square.png);
+/*    background-size: cover;
+    background-repeat: no-repeat;*/
+}
+h1 {
+	font-family: 'Bevan';
+}
+
+.form-inline {
+
+	margin-bottom: 20px;
+}
+
+.description {
+
+	margin-left: 12px;
+}
