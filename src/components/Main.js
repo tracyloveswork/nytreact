@@ -77,7 +77,7 @@ componentDidUpdate(prevProps, prevState) {
 				
 				<div className="row">
 					{/* Search component - searchString, article to save, saved articles, search results */}
-					<Search setQuery={this.setQuery} setSaved={this.setSaved} query={this.state.query} searchResults={this.state.searchResults} />
+					<Search setQuery={this.setQuery} setSaved={this.setSaved} query={this.state.query} searchResults={this.state.searchResults}  savedArticles={this.state.savedArticles} />
 				</div>
 
 				<div className="row">
