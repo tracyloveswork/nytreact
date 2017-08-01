@@ -7,11 +7,18 @@ const authKey = "ae5d8eebadae4ccd996c3845a2402a6e";
 // Exporting an object with methods for retrieving and posting data to our API
 const helper = {
 
-	// Make request
-	makeRequest: (searchTopic, startYear, endYear) => {
+	// Make query
+	makeQuery: (searchTopic, startYear, endYear) => {
 
 	// Build query URL
-		const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTopic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231&page=5";
+	var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTopic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231&page=5";
+
+	return queryURL
+
+	},
+
+	// Make request
+	makeRequest: (queryURL) => {
 
 	// Make request to NYT with search parameters
 		return axios.get(queryURL).then((response) => {
@@ -32,15 +39,10 @@ const helper = {
 	}, // End of getSaved
 
 	// Save article
-	saveArticle: (articleTitle, articleDate, articleURL, articleSnippet) => {
+	saveArticle: (article) => {
 
   	return axios.post("/api/saved",
-  		{
-  			title: articleTitle,
-  			date: articleDate,
-        url: articleURL,
-        snippet: articleSnippet
-  		}
+  		article
   	);
   }, // End of saveArticle
 

@@ -16,30 +16,42 @@ class Main extends React.Component {
 
     // Here we set our state variables
     this.state = {
-      searchString: "",
-      startYear: "",
-      endYear: "",
+      query: "",
       searchResults: [],
       savedArticles: [],
-      newArticle: {}
     };
   }
 
-// Pull saved articles into page on load
+// These functions will give the Child components access to update parent states by passing the function as a prop
+setQuery = (newQuery) => {
+    this.setState({
+      query: newQuery
+    });
+  }
+
+  setSaved = (newSaved) => {
+  	this.setState({
+  		savedArticles: newSaved
+  	});
+  }
+
+// Pull saved articles into page
 componentDidMount() {
 	helpers.getSaved().then(function(response) {
-		if (response !== this.state.saved) {
+
+		if (response !== this.state.savedArticles) {
 			this.setState({ savedArticles: response.data });
 			}
+
 	}.bind(this));
 }
 
 // Update to the search string
 componentDidUpdate(prevProps, prevState) {
 
-	if (prevState.searchString !== this.state.searchString) {
+	if (prevState.query !== this.state.query) {
 
-		helpers.makeRequest(this.state.searchString, this.state.startYear, this.state.endYear).then((data) => {
+		helpers.makeRequest(this.state.query).then((data) => {
 			if (data !== this.state.searchResults) {
 				this.setState({ searchResults: data });
 			};
@@ -47,9 +59,11 @@ componentDidUpdate(prevProps, prevState) {
 	}
 }
 
-// Save article
+// Save article is done on Results component
 
-// Delete article
+
+// Delete article is done on Saved component
+
 
 // Render page
   render() {
@@ -63,12 +77,12 @@ componentDidUpdate(prevProps, prevState) {
 				
 				<div className="row">
 					{/* Search component - searchString, article to save, saved articles, search results */}
-					<Search searchString={this.state.searchString} startYear={this.state.startYear} endYear={this.state.endYear} makeRequest={this.makeRequest} searchResults={this.state.searchResults} newArticle={this.state.newArticle} saveArticle={this.saveArticle} />
+					<Search setQuery={this.setQuery} setSaved={this.setSaved} query={this.state.query} searchResults={this.state.searchResults} />
 				</div>
 
 				<div className="row">
 					{/* Saved component and delete article */}
-					<Saved savedArticles={this.state.savedArticles} deleteArticle={this.deleteArticle} />
+					<Saved setSaved={this.setSaved} savedArticles={this.state.savedArticles} />
 				</div>
 
       </div>

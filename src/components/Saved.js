@@ -1,10 +1,13 @@
 // Include React
 import React from 'react';
 
+// Requiring our helper for making API calls
+import helpers from '../utils/helpers';
+
 class Saved extends React.Component {
 	// initializes connection to parent
-	constructor(){
-    super();
+	constructor(props){
+    super(props);
 	}
 
 render() {
@@ -16,19 +19,23 @@ render() {
 					</div>
 					<div className="panel-body">
 						
-									<div className="panel panel-default">
+						{this.props.savedArticles.map((article, i) => {
+							return (
+									<div key={i} onClick={() => helpers.deleteArticle(article._id, i)} className="panel panel-default">
 										<div className="panel-heading">
 											<div className="row">
 												<div className="col-md-6">
-													<h3 className="panel-title navbar-text"><a href="#">Article Headline</a></h3>
+													<h3 className="panel-title navbar-text"><a href={article.url}>{article.title}</a></h3>
 												</div>
-												<div className="col-md-3"><small className="navbar-text">Date Saved: ?</small></div>
+												<div className="col-md-3"><small className="navbar-text">Date Saved: {article.date}</small></div>
 												<div className="col-md-3"><button type="button" className="pull-right btn btn-default navbar-btn">Delete</button></div>
 											</div>
 										</div>
-										<div className="panel-body description">Snippet goes here.</div>
+										<div className="panel-body description">{article.snippet}</div>
 									</div>
-
+								)
+							}
+						)}
 					</div>
 				</div>
 		</div>

@@ -7,16 +7,17 @@ import Results from './Results';
 
 class Search extends React.Component {
 	// initializes connection to parent
-	constructor(){
-    super();
+	constructor(props){
+    super(props);
 	}
 
 render() {
 	return (
 		<div className="Search">
-				<Query searchString={this.state.searchString} startYear={this.state.startYear} endYear={this.state.endYear} makeRequest={this.makeRequest} />
 
-				<Results searchResults={this.state.searchResults} newArticle={this.state.newArticle} saveArticle={this.saveArticle} />
+			<Query setQuery={this.props.setQuery} makeQuery={this.props.makeQuery} query={this.props.query} />
+
+			<Results searchResults={this.props.searchResults} setSaved={this.setSaved} savedArticles={this.props.savedArticles} />
 
 		</div>
 

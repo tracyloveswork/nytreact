@@ -55,10 +55,12 @@ app.get("/api/saved", function(req, res) {
       res.send(doc);
     }
   }); // End of get saved articles
+});
 
 // Route to save articles
 app.post("/api/saved", function(req, res) {
 
+  console.log("BODY: ");
  console.log(req.body);
 
  var saved = [];

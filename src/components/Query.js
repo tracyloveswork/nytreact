@@ -1,16 +1,22 @@
 // Include React
 import React from 'react';
 
+import axios from 'axios';
+
+// Requiring our helper for making API calls
+import helpers from '../utils/helpers';
+
 class Query extends React.Component {
 	// initializes connection to parent
-	constructor(){
-    super();
+	constructor(props){
+    super(props);
 
     this.state ={
     	searchString: "",
     	startYear: "",
       endYear: ""
     }
+
 	}
 
 
@@ -20,19 +26,24 @@ handleChange = event => {
 		});
 	};
 
-	handleSubmit = event => {
+handleSubmit = event => {
 		event.preventDefault()
 		console.log('handleSubmit called')
 
-		this.props.makeRequest(searchString, startYear, endYear);
+		let query = helpers.makeQuery(
+			this.state.searchString, 
+			this.state.startYear, 
+			this.state.endYear
+			);
 
+		this.props.setQuery(query);
 	};
 
 render() {
 	return (
 		<div className="Query">
 
-						<div className="text-center">
+					<div className="text-center">
 					<form className="form-inline">
 						<div className="form-group">
 							<label className="sr-only" for="topic">Topic</label>
@@ -66,7 +77,7 @@ render() {
 							onChange={this.handleChange}
 							/>
 						</div>
-						<button type="submit" className="btn btn-primary" onClick={this.handleSubmit(searchString, startYear, endYear)}>Search</button>
+						<button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
 					</form>
 				 </div>
 
