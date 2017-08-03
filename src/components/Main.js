@@ -20,6 +20,7 @@ class Main extends React.Component {
       searchResults: [],
       savedArticles: [],
     };
+    this.setSaved = this.setSaved.bind(this)
   }
 
 // These functions will give the Child components access to update parent states by passing the function as a prop
@@ -29,11 +30,19 @@ setQuery = (newQuery) => {
     });
   }
 
-  setSaved = (newSaved) => {
-  	this.setState({
-  		savedArticles: newSaved
-  	});
-  }
+
+// This makes a new request to update saved.  The alternative is to update the savedArticles array with either push for saving or pop for deleting.
+setSaved() {
+	helpers.getSaved().then(function(response) {
+
+	if (response !== this.state.savedArticles) {
+		this.setState({ savedArticles: response.data });
+		}
+	}.bind(this));
+	// this.setState({
+	// 	savedArticles: newSaved
+	// })
+}
 
 // Pull saved articles into page
 componentDidMount() {

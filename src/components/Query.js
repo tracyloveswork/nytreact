@@ -37,6 +37,12 @@ handleSubmit = event => {
 			);
 
 		this.props.setQuery(query);
+
+		this.setState({
+    	searchString: "",
+    	startYear: "",
+      endYear: ""
+    })
 	};
 
 render() {

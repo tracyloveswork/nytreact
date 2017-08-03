@@ -10,9 +10,16 @@ class Saved extends React.Component {
     super(props);
 	}
 
+handleSubmit (id) {
+	helpers.deleteArticle(id)
+	this.props.setSaved()
+}
+
 render() {
 	return (
 		<div className="Saved">
+
+		{this.props.savedArticles.length > 0 && 
 			<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title">Saved Articles</h3>
@@ -21,13 +28,13 @@ render() {
 						
 						{this.props.savedArticles.map((article, i) => {
 							return (
-									<div key={i} onClick={() => helpers.deleteArticle(article._id, i)} className="panel panel-default">
+									<div key={i} onClick={() => this.handleSubmit(article._id)} className="panel panel-default">
 										<div className="panel-heading">
 											<div className="row">
 												<div className="col-md-6">
 													<h3 className="panel-title navbar-text"><a href={article.url}>{article.title}</a></h3>
 												</div>
-												<div className="col-md-3"><small className="navbar-text">Date Saved: {article.date}</small></div>
+												<div className="col-md-3"><small className="navbar-text">Date Published: {article.date}</small></div>
 												<div className="col-md-3"><button type="button" className="pull-right btn btn-default navbar-btn">Delete</button></div>
 											</div>
 										</div>
@@ -38,6 +45,8 @@ render() {
 						)}
 					</div>
 				</div>
+
+				}
 		</div>
 
 		);

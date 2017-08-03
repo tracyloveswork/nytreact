@@ -40,14 +40,17 @@ handleSubmit (index, title, date, url, snippet) {
 		article: newState
 	})
 
-	helpers.getSaved()
+	this.props.setSaved()
 
-	
+	let newResults = this.props.searchResults
+	newResults.splice(index, 1)
+
 }
 
 render() {
 	return (
 		<div className="Results">
+		{this.props.searchResults.length > 0 && 
 
 	      <div className="panel panel-default">
 	        <div className="panel-heading">
@@ -73,6 +76,8 @@ render() {
 	
 	        		</div>
 	      </div>
+
+	      }
 		</div>
 
 		);

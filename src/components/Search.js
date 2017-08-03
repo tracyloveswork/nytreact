@@ -17,7 +17,7 @@ render() {
 
 			<Query setQuery={this.props.setQuery} makeQuery={this.props.makeQuery} query={this.props.query} />
 
-			<Results searchResults={this.props.searchResults} setSaved={this.setSaved} savedArticles={this.props.savedArticles} />
+			<Results searchResults={this.props.searchResults} setSaved={this.props.setSaved} savedArticles={this.props.savedArticles} />
 
 		</div>
 

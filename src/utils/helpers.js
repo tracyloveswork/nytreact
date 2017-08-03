@@ -42,8 +42,11 @@ const helper = {
 	saveArticle: (article) => {
 
   	return axios.post("/api/saved",
-  		article
-  	);
+  		article).then((response) => {
+      console.log(response)
+      this.getSaved() 
+    }
+    )
   }, // End of saveArticle
 
 	// Delete article
