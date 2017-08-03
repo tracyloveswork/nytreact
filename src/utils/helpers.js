@@ -10,10 +10,18 @@ const helper = {
 	// Make query
 	makeQuery: (searchTopic, startYear, endYear) => {
 
-	// Build query URL
-	var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTopic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231&page=5";
+    if (startYear == 0) {
+      startYear = 2016
+    }
 
-	return queryURL
+    if (endYear == 0) {
+      endYear = 2017
+    }
+
+  	// Build query URL
+  	var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + searchTopic + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231&page=5";
+
+  	return queryURL
 
 	},
 
