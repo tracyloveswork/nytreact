@@ -1,8 +1,6 @@
 // Include React
 import React from 'react';
 
-import axios from 'axios';
-
 // Requiring our helper for making API calls
 import helpers from '../utils/helpers';
 
@@ -25,20 +23,23 @@ class Results extends React.Component {
 
 // Pick up values of article and use helper to save to database
 handleSubmit (index, title, date, url, snippet) {
+
+	let dateString = date.slice(0,10);
+
+	console.log(`Date: ${dateString}\nTitle: ${title}`)
+
 	const newState = this.state.article;
 
-	console.log("Title: " + title);
-
 	newState.title = title;
-	newState.date = date;
+	newState.date = dateString;
 	newState.url = url;
 	newState.snippet = snippet;
-
-	helpers.saveArticle(newState)
 
 	this.setState({
 		article: newState
 	})
+
+	helpers.saveArticle(newState)
 
 	this.props.setSaved()
 

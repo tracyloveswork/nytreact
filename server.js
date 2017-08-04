@@ -28,9 +28,14 @@ app.use(express.static("build"));
 // MongoDB configuration (Change this URL to your own DB)
 // mongoose.connect("mongodb://localhost/nytreact");
 // mongoose.connect("mongodb://heroku_7hw3g68w:b5is82rgjl7bo4s2uhp5knhcp3@ds129003.mlab.com:29003/heroku_7hw3g68w");
-mongoose.connect("mongodb://admin:heroku@ds129003.mlab.com:29003/heroku_7hw3g68w");
+// mongoose.connect("mongodb://admin:heroku@ds129003.mlab.com:29003/heroku_7hw3g68w");
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+} else {
+  mongoose.connect('mongodb://localhost/nyt-react-hw') // local mongo url
+}
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 db.on("error", function(err) {
   console.log("Mongoose Error: ", err);
@@ -43,9 +48,19 @@ db.once("open", function() {
 // -------------------------------------------------
 
 // Main "/" Route. This will redirect the user to our rendered React application
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/build/static/index.html");
-});
+// app.get("/", function(req, res) {
+//   res.sendFile(__dirname + "/build/static/index.html");
+// });
+
+// ==== if its production environment!
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path')
+  console.log('YOU ARE IN THE PRODUCTION ENV')
+  app.use('/static', express.static(path.join(__dirname, '../build/static')))
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/'))
+  })
+}
 
 // Route to get all saved articles.
 app.get("/api/saved", function(req, res) {
@@ -69,6 +84,7 @@ app.post("/api/saved", function(req, res) {
  var saved = [];
 
  var newArticle = {};
+
  newArticle.title = req.body.title;
  newArticle.date = req.body.date;
  newArticle.url = req.body.url;

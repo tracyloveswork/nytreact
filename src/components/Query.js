@@ -1,8 +1,6 @@
 // Include React
 import React from 'react';
 
-import axios from 'axios';
-
 // Requiring our helper for making API calls
 import helpers from '../utils/helpers';
 
